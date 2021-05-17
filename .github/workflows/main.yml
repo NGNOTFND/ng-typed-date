@@ -24,12 +24,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: ./ng-typed-date
 
       - name: Install Dependencies
-        run: ls -las
+        run: npm i
         
       - name: Run Tests
-        run: npm test ng-typed-date/package.json
+        run: npm test
       
       - name: Run Build
-        run: npm build ng-typed-date/package.json
+        run: npm build
