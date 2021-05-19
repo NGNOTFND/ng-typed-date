@@ -4,18 +4,20 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { NgTypedDateModule } from '@ng-not-found/ng-typed-date';
+import { CommonModule } from '@angular/common';
+import { NgModelDateDirective } from './ng-model-date.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    NgModelDateDirective
   ],
   imports: [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    NgTypedDateModule
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

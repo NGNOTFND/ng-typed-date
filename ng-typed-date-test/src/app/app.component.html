@@ -1,4 +1,7 @@
-<ng-typed-date [(ngModel)]="data" class="input" name="data" ngDefaultControl></ng-typed-date>
-  {{ data | json}}
+<form #form="ngForm">
+  <input type="date" [(ngModelDate)]="data" name="data" required />
+  {{ data | json }}
+  {{ form.invalid }}
+</form>
 
 <!-- <input type="date" [(ngModel)]="data" name="data"> -->
