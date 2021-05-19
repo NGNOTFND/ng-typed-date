@@ -1,27 +1,48 @@
 # NgTypedDate
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.
+Component that uses the native date picker and binds the typed value to Date.
 
-## Development server
+### How to install with npm ?
+```
+npm i @ng-not-found/ng-typed-date --save
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### What is this component for? ###
 
-## Code scaffolding
+This te component has the purpose of facilitating the use of date fields, making the binding in the model in a typed way.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+When working with dates in Angular, it binds with a string and that's usually not what we need. We need it to be a valid Date.
 
-## Build
+### How do I use it? ###
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```module.ts
+  import { BrowserModule } from '@angular/platform-browser';
+  import { NgModule } from '@angular/core';
 
-## Running unit tests
+  import { AppRoutingModule } from './app-routing.module';
+  import { AppComponent } from './app.component';
+  import { FormsModule } from '@angular/forms';
+  import { NgTypedDateModule } from '@ng-not-found/ng-typed-date';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  @NgModule({
+    declarations: [
+      AppComponent,
+    ],
+    imports: [
+      FormsModule,
+      BrowserModule,
+      AppRoutingModule,
+      NgTypedDateModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
 
-## Running end-to-end tests
+ ```
+ 
+```.html
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+ <ng-typed-date [(ngModel)]="data" class="input" name="data" ngDefaultControl></ng-typed-date>
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```

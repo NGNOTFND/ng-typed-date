@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
       name="date"
       [min]="min"
       [max]="min"
+      [class]="class"
       (change)="onChangeDate($event.target.value)"
       [ngModel]="date | date:'yyyy-MM-dd'"
       (ngModelChange)="date = $event"
@@ -37,10 +38,11 @@ export class NgTypedDateComponent implements OnInit {
     this._date = value;
     this.onChange(this._date);
   }
-  min: Date;
-  max: Date;
-  required: boolean;
-  disabled: boolean;
+  @Input() min: Date;
+  @Input() max: Date;
+  @Input() required: boolean;
+  @Input() disabled: boolean;
+  @Input() class: string;
 
   constructor() { }
 
