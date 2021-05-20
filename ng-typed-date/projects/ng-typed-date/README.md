@@ -1,24 +1,105 @@
 # NgTypedDate
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.9.
+  
 
-## Code scaffolding
+Directive that uses the native date picker and binds the typed value to Date.
 
-Run `ng generate component component-name --project ng-typed-date` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-typed-date`.
-> Note: Don't forget to add `--project ng-typed-date` or else it will be added to the default project in your `angular.json` file. 
+  
 
-## Build
+### How to install with npm ?
 
-Run `ng build ng-typed-date` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
 
-## Publishing
+npm i @ng-not-found/ng-typed-date --save
 
-After building your library with `ng build ng-typed-date`, go to the dist folder `cd dist/ng-typed-date` and run `npm publish`.
+```
 
-## Running unit tests
+  
 
-Run `ng test ng-typed-date` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### What is this component for? ###
 
-## Further help
+  
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+This te directive has the purpose of facilitating the use of date fields, making the binding in the model in a typed way.
+
+  
+
+When working with dates in Angular, it binds with a string and that's usually not what we need. We need it to be a valid Date.
+
+  
+
+### How do I use it? ###
+
+  
+
+```module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+
+import { NgModule } from '@angular/core';
+
+  
+
+import { AppRoutingModule } from './app-routing.module';
+
+import { AppComponent } from './app.component';
+
+import { FormsModule } from '@angular/forms';
+
+import { NgTypedDateModule } from '@ng-not-found/ng-typed-date';
+
+  
+
+@NgModule({
+
+declarations: [
+
+AppComponent,
+
+],
+
+imports: [
+
+FormsModule,
+
+BrowserModule,
+
+AppRoutingModule,
+
+NgTypedDateModule
+
+],
+
+providers: [],
+
+bootstrap: [AppComponent]
+
+})
+
+export class AppModule { }
+
+  
+
+```
+
+```.html
+
+  
+
+<form #form="ngForm">
+
+<input type="date" [(ngModelDate)]="data" name="data" />
+
+</form>
+
+  
+
+```
+
+### Properties ###
+
+
+| Name  |  Type |
+| ------------ | ------------ |
+| min  |  Date / string  |
+| max |  Date / string  |
