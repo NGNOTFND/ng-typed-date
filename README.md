@@ -57,19 +57,19 @@ import { NgTypedDateModule } from '@ng-not-found/ng-typed-date';
 
 declarations: [
 
-AppComponent,
+  AppComponent,
 
 ],
 
 imports: [
 
-FormsModule,
+  FormsModule,
 
-BrowserModule,
+  BrowserModule,
 
-AppRoutingModule,
+  AppRoutingModule,
 
-NgTypedDateModule
+  NgTypedDateModule
 
 ],
 
@@ -91,7 +91,7 @@ export class AppModule { }
 
 <form #form="ngForm">
 
-<input type="date" [(ngModelDate)]="data" name="data" />
+  <input type="date" [(ngModelDate)]="data" name="data" />
 
 </form>
 
