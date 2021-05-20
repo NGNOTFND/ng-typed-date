@@ -1,15 +1,13 @@
 {
-  "name": "@ng-not-found/ng-typed-date",
-  "version": "1.0.1",
+  "name": "ng-typed-date-test",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ng-typed-date --configuration=production && npm run copy",
+    "build": "ng build",
     "test": "ng test",
-    "test-debug": "ng test --watch",
     "lint": "ng lint",
-    "postinstall": "ngcc",
-    "copy": "npx copyfiles .npmrc dist/ng-typed-date"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -21,12 +19,13 @@
     "@angular/platform-browser": "~11.0.3",
     "@angular/platform-browser-dynamic": "~11.0.3",
     "@angular/router": "~11.0.3",
+    "@ng-not-found/ng-typed-date": "^1.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.7",
+    "@angular-devkit/build-angular": "^0.901.15",
     "@angular/cli": "~11.0.3",
     "@angular/compiler-cli": "~11.0.3",
     "@types/jasmine": "~3.6.0",
@@ -39,16 +38,9 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-packagr": "^11.0.0",
     "protractor": "~7.0.0",
-    "puppeteer": "^2.1.1",
-    "ts-mocks": "^3.0.1",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
-  },
-  "description": "Component that uses the native date picker and binds the typed value to Date.",
-  "main": "index.js",
-  "author": "renan.aragao",
-  "license": "MIT"
+  }
 }

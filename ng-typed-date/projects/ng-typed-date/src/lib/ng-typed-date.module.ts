@@ -1,12 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { NgTypedDateComponent } from './ng-typed-date.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModelDateDirective } from './ng-model-date.directive';
 
 
 
 @NgModule({
-  declarations: [NgTypedDateComponent],
+  declarations: [NgModelDateDirective],
   imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule
   ],
-  exports: [NgTypedDateComponent]
+  exports: [NgModelDateDirective]
 })
 export class NgTypedDateModule { }

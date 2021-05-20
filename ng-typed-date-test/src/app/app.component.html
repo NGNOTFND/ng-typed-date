@@ -1,0 +1,5 @@
+<form #form="ngForm">
+  <input type="date" [(ngModelDate)]="data" name="data" required />
+  {{ data | json }}
+  {{ form.invalid }}
+</form>
