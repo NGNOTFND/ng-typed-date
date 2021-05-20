@@ -1,16 +1,20 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Directive, ElementRef, EventEmitter, forwardRef, Host, Inject, Input, OnInit, Optional, Output, Renderer2, Self } from '@angular/core';
 import {
-  AsyncValidator,
-  AsyncValidatorFn,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Host,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  Renderer2
+} from '@angular/core';
+import {
   ControlContainer,
   ControlValueAccessor,
-  NgControl,
   NgModel,
-  NG_ASYNC_VALIDATORS,
-  NG_VALIDATORS,
-  Validator,
-  ValidatorFn
+  Validators
 } from '@angular/forms';
 
 @Directive({
@@ -22,7 +26,7 @@ import {
     '(change)': 'onChangeDate($event.target.value)'
   }
 })
-export class NgModelDateDirective extends NgModel implements OnInit, AfterViewInit, ControlValueAccessor {
+export class NgModelDateDirective extends NgModel implements OnInit, ControlValueAccessor {
 
   private _ngModelDate: Date;
   public get ngModelDate(): Date {
@@ -31,29 +35,31 @@ export class NgModelDateDirective extends NgModel implements OnInit, AfterViewIn
   @Input() public set ngModelDate(value: Date) {
     if (this._ngModelDate != value) {
       this._ngModelDate = value;
-      this.control.setValue(this.datePipe.transform(this._ngModelDate, 'yyyy-MM-dd'));
+      this.control.setValue(this.formatDate(this._ngModelDate));
     }
   }
+  @Input() required: boolean | string = null;
+  @Input() min: Date | string;
+  @Input() max: Date | string;
 
   @Output() ngModelDateChange = new EventEmitter<Date>();
 
   constructor(
     @Optional() @Host() parent: ControlContainer,
-    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
     private elementRef: ElementRef,
     private renderer: Renderer2,
     private datePipe: DatePipe) {
-    super(parent, validators, asyncValidators, null);
+    super(parent, null, null, null);
 
     super.valueAccessor = this;
-    super.options = { updateOn: 'blur', name: this.elementRef.nativeElement.name };
+    super.options = { updateOn: 'blur' };
     super.model = this.ngModelDate;
 
   }
   writeValue(value: any): void {
-    this.renderer.setProperty(this.elementRef.nativeElement, 'value', value);
+    this.setPropertyElement('value', value);
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -61,14 +67,26 @@ export class NgModelDateDirective extends NgModel implements OnInit, AfterViewIn
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    this.renderer.setProperty(this.elementRef.nativeElement, 'disabled', isDisabled);
-  }
-
-  ngAfterViewInit(): void {
+    this.setPropertyElement('disabled', isDisabled);
   }
 
   ngOnInit(): void {
+    this.setRequired();
 
+    this.setSettingsInputDate('min', this.min);
+    this.setSettingsInputDate('max', this.max);
+  }
+
+  private setSettingsInputDate(propertyName: string, value: Date | string) {
+    if (value) {
+      this.setPropertyElement(propertyName, this.formatDate(value));
+    }
+  }
+
+  private setRequired() {
+    if (this.required !== null) {
+      this.control.setValidators(Validators.required);
+    }
   }
 
   onChange: any = () => { };
@@ -76,8 +94,16 @@ export class NgModelDateDirective extends NgModel implements OnInit, AfterViewIn
 
   onChangeDate(event: string) {
     const [year, month, day] = event.split('-');
-    this._ngModelDate = new Date(Number(year), Number(month) - 1, Number(day));
-    this.ngModelDateChange.emit(this._ngModelDate);
+    this.ngModelDate = new Date(Number(year), Number(month) - 1, Number(day));
+    this.ngModelDateChange.emit(this.ngModelDate);
+  }
+
+  private formatDate(date: Date | string) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
+
+  private setPropertyElement(propertyName: string, value: any) {
+    this.renderer.setProperty(this.elementRef.nativeElement, propertyName, value);
   }
 
 }
