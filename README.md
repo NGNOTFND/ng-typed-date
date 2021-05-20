@@ -1,3 +1,6 @@
+[![CI](https://github.com/NGNOTFND/ng-typed-date/actions/workflows/main.yml/badge.svg)](https://github.com/NGNOTFND/ng-typed-date/actions/workflows/main.yml)
+
+
 # NgTypedDate
 
   
