@@ -1,8 +1,8 @@
-import { Renderer2 } from '@angular/core';
-import { NgModelDateDirective } from './ng-model-date.directive';
-import { Mock } from 'ts-mocks';
 import { DatePipe } from '@angular/common';
+import { Renderer2 } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Mock } from 'ts-mocks';
+import { NgModelDateDirective } from './ng-model-date.directive';
 
 describe('NgModelDateDirective', () => {
 
@@ -125,7 +125,7 @@ describe('NgModelDateDirective', () => {
 
   it('should register OnChange', () => {
 
-    const onChange = () => {};
+    const onChange = () => { };
 
     directive.registerOnChange(onChange);
 
@@ -135,7 +135,7 @@ describe('NgModelDateDirective', () => {
 
   it('should register OnTouched', () => {
 
-    const onTouched = () => {};
+    const onTouched = () => { };
 
     directive.registerOnTouched(onTouched);
 
@@ -150,6 +150,7 @@ describe('NgModelDateDirective', () => {
     spyOn(directive.ngModelDateChange, 'emit');
 
     directive.onChangeDate(event);
+    directive.onBlur();
 
     expect(directive.ngModelDate).toEqual(new Date(2021, 4, 20));
     expect(directive.ngModelDateChange.emit).toHaveBeenCalledWith(directive.ngModelDate);
