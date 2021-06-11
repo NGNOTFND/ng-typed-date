@@ -23,20 +23,27 @@ import {
     DatePipe
   ],
   host: {
-    '(change)': 'onChangeDate($event.target.value)'
+    '(change)': 'onChangeDate($event.target.value)',
+    '(blur)': 'onBlur()',
   }
 })
 export class NgModelDateDirective extends NgModel implements OnInit, ControlValueAccessor {
 
-  private _ngModelDate: Date;
-  public get ngModelDate(): Date {
+  private _ngModelDate: Date | null;
+  public get ngModelDate(): any {
     return this._ngModelDate;
   }
-  @Input() public set ngModelDate(value: Date) {
-    if (this._ngModelDate != value) {
-      this._ngModelDate = value;
-      this.control.setValue(this.formatDate(this._ngModelDate));
+  @Input() public set ngModelDate(value: any) {
+    if (!isNaN(value)) {
+      if (value instanceof Date) {
+        if (this._ngModelDate != value) {
+          this._ngModelDate = value;
+        }
+      }
+    } else {
+      this._ngModelDate = null;
     }
+
   }
   @Input() required: boolean | string = null;
   @Input() min: Date | string;
@@ -95,8 +102,13 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
 
   onChangeDate(event: string) {
     const [year, month, day] = event.split('-');
-    this.ngModelDate = new Date(Number(year), Number(month) - 1, Number(day));
+    this.ngModelDate = new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
     this.ngModelDateChange.emit(this.ngModelDate);
+  }
+
+  onBlur(): void {
+    this.control.setValue(this.formatDate(this._ngModelDate));
+    this.onTouched();
   }
 
   private formatDate(date: Date | string) {
