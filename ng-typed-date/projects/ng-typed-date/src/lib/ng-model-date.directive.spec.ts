@@ -148,13 +148,25 @@ describe('NgModelDateDirective', () => {
     const event = '2021-05-20';
 
     spyOn(directive.ngModelDateChange, 'emit');
+    spyOn(directive, 'onBlur');
 
     directive.onChangeDate(event);
-    directive.onBlur();
 
     expect(directive.ngModelDate).toEqual(new Date(2021, 4, 20));
     expect(directive.ngModelDateChange.emit).toHaveBeenCalledWith(directive.ngModelDate);
-    expect(directive.control.value).toEqual(event);
+    expect(directive.onBlur).not.toHaveBeenCalled();
+
+  });
+
+  it('deve setar valor', () => {
+
+    const data = new Date(2018, 1, 1, 0, 0, 0, 0);
+
+    spyOn(directive, 'onBlur');
+
+    directive.ngModelDate = data;
+
+    expect(directive.onBlur).toHaveBeenCalled();
 
   });
 
