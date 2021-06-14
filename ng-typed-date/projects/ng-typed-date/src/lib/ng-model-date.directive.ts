@@ -104,8 +104,8 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
 
   onChangeDate(event: string) {
     const [year, month, day] = event.split('-');
-    this.ngModelDate = new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
-    this.ngModelDateChange.emit(this.ngModelDate);
+    this._ngModelDate = new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
+    this.ngModelDateChange.emit(this._ngModelDate);
   }
 
   onBlur(): void {
