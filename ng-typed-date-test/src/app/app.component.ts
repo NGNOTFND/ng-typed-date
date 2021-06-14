@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'ng-typed-date-test';
   today = '2021-5-20';
-  data: Date;
+  data = new Date();
 
 }

@@ -158,4 +158,14 @@ describe('NgModelDateDirective', () => {
 
   });
 
+  it('deve setar valor', () => {
+
+    const data = new Date(2018, 1, 1, 0, 0, 0, 0);
+
+    directive.ngModelDate = data;
+
+    expect(directive.control.value).toEqual('2018-02-01');
+
+  });
+
 });
