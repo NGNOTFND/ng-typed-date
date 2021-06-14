@@ -38,7 +38,10 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
       if (value instanceof Date) {
         if (this._ngModelDate != value) {
           this._ngModelDate = value;
+<<<<<<< HEAD
           this.onBlur();
+=======
+>>>>>>> 5d9e904ec13950c1abdd8e0fcf3844eceee43461
         }
       }
     } else {
