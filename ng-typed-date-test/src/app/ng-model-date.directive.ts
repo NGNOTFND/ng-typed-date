@@ -38,6 +38,7 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
       if (value instanceof Date) {
         if (this._ngModelDate != value) {
           this._ngModelDate = value;
+          this.onBlur();
         }
       }
     } else {
@@ -83,7 +84,6 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
 
     this.setSettingsInputDate('min', this.min);
     this.setSettingsInputDate('max', this.max);
-    this.onBlur();
   }
 
   private setRequired() {
@@ -103,8 +103,8 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
 
   onChangeDate(event: string) {
     const [year, month, day] = event.split('-');
-    this.ngModelDate = new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
-    this.ngModelDateChange.emit(this.ngModelDate);
+    this._ngModelDate = new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
+    this.ngModelDateChange.emit(this._ngModelDate);
   }
 
   onBlur(): void {
