@@ -34,12 +34,10 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
     return this._ngModelDate;
   }
   @Input() public set ngModelDate(value: any) {
-    if (!isNaN(value)) {
-      if (value instanceof Date) {
-        if (this._ngModelDate != value) {
-          this._ngModelDate = value;
-          this.onBlur();
-        }
+    if (this.isValidDate(value)) {
+      if (this._ngModelDate != value) {
+        this._ngModelDate = value;
+        this.onBlur();
       }
     } else {
       this._ngModelDate = null;
@@ -114,11 +112,22 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
   }
 
   private formatDate(date: Date | string) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd');
+
+    if (this.isValidDate(date))
+      return this.datePipe.transform(date, 'yyyy-MM-dd');
+
+    return null;
   }
 
   private setPropertyElement(propertyName: string, value: any) {
     this.renderer.setProperty(this.elementRef.nativeElement, propertyName, value);
+  }
+
+  private isValidDate(value: Date | string) {
+    if (value instanceof Date)
+      return !isNaN(value.getTime());
+
+    return !isNaN(Date.parse(value));
   }
 
 }

@@ -47,6 +47,54 @@ describe('NgModelDateDirective', () => {
 
   });
 
+  it(`should set null in min`, () => {
+
+    directive.min = new Date('');
+
+    directive.ngOnInit();
+
+    expect(rendererMock.Object.setProperty).toHaveBeenCalledWith(elementRefMock.nativeElement, 'min', null);
+
+  });
+
+  it(`should set null in max`, () => {
+
+    directive.max = new Date('');
+
+    directive.ngOnInit();
+
+    expect(rendererMock.Object.setProperty).toHaveBeenCalledWith(elementRefMock.nativeElement, 'max', null);
+
+  });
+
+  [{
+    case: {
+      max: new Date(2021, 4, 20)
+    },
+    result: {
+      value: '2021-05-20'
+    }
+  },
+  {
+    case: {
+      max: '2021-05-21'
+    },
+    result: {
+      value: '2021-05-21'
+    }
+  }]
+    .forEach(test => it(`should set max: ${test.result.value}`, () => {
+
+      directive.max = test.case.max;
+
+      directive.ngOnInit();
+
+      expect(rendererMock.Object.setProperty)
+        .toHaveBeenCalledWith(elementRefMock.nativeElement, 'max', test.result.value);
+
+    }));
+
+
   [{
     case: {
       min: new Date(2021, 4, 20)
@@ -76,30 +124,62 @@ describe('NgModelDateDirective', () => {
 
   [{
     case: {
-      max: new Date(2021, 4, 20)
+      max: null
     },
     result: {
-      value: '2021-05-20'
+      value: null
     }
   },
   {
     case: {
-      max: '2021-05-21'
+      max: undefined
     },
     result: {
-      value: '2021-05-21'
+      value: null
     }
   }]
-    .forEach(test => it(`should set max: ${test.result.value}`, () => {
+    .forEach(test => it('not should set max if value is falsy', () => {
+
+      const spy = rendererMock.spyOf(x => x.setProperty);
+      spy.calls.reset();
 
       directive.max = test.case.max;
 
       directive.ngOnInit();
 
-      expect(rendererMock.Object.setProperty)
-        .toHaveBeenCalledWith(elementRefMock.nativeElement, 'max', test.result.value);
+      expect(rendererMock.Object.setProperty).not.toHaveBeenCalled();
 
     }));
+
+    [{
+      case: {
+        min: null
+      },
+      result: {
+        value: null
+      }
+    },
+    {
+      case: {
+        min: undefined
+      },
+      result: {
+        value: null
+      }
+    }]
+      .forEach(test => it('not should set min if value is falsy', () => {
+
+        const spy = rendererMock.spyOf(x => x.setProperty);
+        spy.calls.reset();
+
+        directive.min = test.case.min;
+
+        directive.ngOnInit();
+
+        expect(rendererMock.Object.setProperty).not.toHaveBeenCalled();
+
+      }));
+
 
   it('should set value', () => {
 
