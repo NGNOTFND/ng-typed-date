@@ -1,5 +1,5 @@
 <form #form="ngForm">
-  <input type="date" [(ngModelDate)]="data" name="data" required />
-  {{ data | json }}
+  <input type="date" [(ngModelDate)]="periodo.data" [max]="periodo.max" name="data" required />
+  {{ periodo | json }}
   {{ form.invalid }}
 </form>
