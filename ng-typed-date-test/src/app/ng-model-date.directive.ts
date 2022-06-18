@@ -55,7 +55,7 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
   @Input() public set min(value: Date | string) {
     if (this._min !== value) {
       this._min = value;
-      this.onBlur();
+      this.setSettingsInputDate('min', this.min);
     }
   }
 
@@ -65,7 +65,7 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
   @Input() public set max(value: Date | string) {
     if(this._max !== value) {
       this._max = value;
-      this.onBlur();
+      this.setSettingsInputDate('max', this.max);
     }
   }
 
