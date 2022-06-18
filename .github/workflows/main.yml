@@ -35,4 +35,4 @@ jobs:
       
       - name: Run Build
         working-directory: ./ng-typed-date
-        run: npm build
+        run: npm run build
