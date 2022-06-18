@@ -151,34 +151,34 @@ describe('NgModelDateDirective', () => {
 
     }));
 
-    [{
-      case: {
-        min: null
-      },
-      result: {
-        value: null
-      }
+  [{
+    case: {
+      min: null
     },
-    {
-      case: {
-        min: undefined
-      },
-      result: {
-        value: null
-      }
-    }]
-      .forEach(test => it('not should set min if value is falsy', () => {
+    result: {
+      value: null
+    }
+  },
+  {
+    case: {
+      min: undefined
+    },
+    result: {
+      value: null
+    }
+  }]
+    .forEach(test => it('not should set min if value is falsy', () => {
 
-        const spy = rendererMock.spyOf(x => x.setProperty);
-        spy.calls.reset();
+      const spy = rendererMock.spyOf(x => x.setProperty);
+      spy.calls.reset();
 
-        directive.min = test.case.min;
+      directive.min = test.case.min;
 
-        directive.ngOnInit();
+      directive.ngOnInit();
 
-        expect(rendererMock.Object.setProperty).not.toHaveBeenCalled();
+      expect(rendererMock.Object.setProperty).not.toHaveBeenCalled();
 
-      }));
+    }));
 
 
   it('should set value', () => {
@@ -257,6 +257,22 @@ describe('NgModelDateDirective', () => {
     directive.ngModelDate = data;
 
     expect(directive.control.value).toEqual('2018-02-01');
+
+  });
+
+  it(`should set min`, () => {
+
+    directive.min = new Date(2018, 1, 1, 0, 0, 0, 0);
+
+    expect(rendererMock.Object.setProperty).toHaveBeenCalledWith(elementRefMock.nativeElement, 'min', '2018-02-01');
+
+  });
+
+  it(`should set max`, () => {
+
+    directive.max = new Date(2018, 1, 1, 0, 0, 0, 0);
+
+    expect(rendererMock.Object.setProperty).toHaveBeenCalledWith(elementRefMock.nativeElement, 'max', '2018-02-01');
 
   });
 
