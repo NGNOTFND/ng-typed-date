@@ -30,6 +30,9 @@ import {
 export class NgModelDateDirective extends NgModel implements OnInit, ControlValueAccessor {
 
   private _ngModelDate: Date | null;
+  private _min: Date | string;
+  private _max: Date | string;
+
   public get ngModelDate(): any {
     return this._ngModelDate;
   }
@@ -45,8 +48,26 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
 
   }
   @Input() required: boolean | string = null;
-  @Input() min: Date | string;
-  @Input() max: Date | string;
+
+  public get min(): Date | string {
+    return this._min;
+  }
+  @Input() public set min(value: Date | string) {
+    if (this._min !== value) {
+      this._min = value;
+      this.setSettingsInputDate('min', this.min);
+    }
+  }
+
+  public get max(): Date | string {
+    return this._max;
+  }
+  @Input() public set max(value: Date | string) {
+    if(this._max !== value) {
+      this._max = value;
+      this.setSettingsInputDate('max', this.max);
+    }
+  }
 
   @Output() ngModelDateChange = new EventEmitter<Date>();
 

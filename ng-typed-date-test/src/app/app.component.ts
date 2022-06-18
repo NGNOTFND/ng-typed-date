@@ -10,8 +10,8 @@ export class AppComponent {
   today = '2021-5-20';
 
   periodo = {
-    data: new Date(),
-    max: new Date('')
+    dtFim: new Date(),
+    dtInicio: new Date()
   };
 
 }
