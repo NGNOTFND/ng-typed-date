@@ -3,9 +3,9 @@
   <br>
   <input type="date" [(ngModelDate)]="periodo.dtFim" [min]="periodo.dtInicio" name="data" required />
   <br> -->
-  <input type="datetime-local" [(ngModelDatetimeLocal)]="periodo.dtInicio" [max]="periodo.dtFim" name="data" required />
+  <input type="datetime-local" [(ngModelDate)]="periodo.dtInicio" [max]="periodo.dtFim" name="dataInicio" required />
   <br>
-  <input type="datetime-local" [(ngModelDatetimeLocal)]="periodo.dtFim" [min]="periodo.dtInicio" name="data" required />
+  <input type="datetime-local" [(ngModelDate)]="periodo.dtFim" [min]="periodo.dtInicio" name="dataFim" required />
   {{ periodo | json }}
   {{ form.invalid }}
 </form>

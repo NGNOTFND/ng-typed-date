@@ -18,7 +18,7 @@ import {
 } from '@angular/forms';
 
 @Directive({
-  selector: '[ngModelDate]:not([formControlName]):not([formControl])',
+  selector: '[type=date][ngModelDate]:not([formControlName]):not([formControl])',
   providers: [
     DatePipe
   ],
