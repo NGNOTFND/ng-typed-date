@@ -102,19 +102,6 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -130,8 +117,10 @@
       }
     }
   },
-  "defaultProject": "ng-typed-date-test",
   "cli": {
-    "analytics": "94b3a48d-a363-470b-b572-c5a661a5f246"
+    "analytics": "94b3a48d-a363-470b-b572-c5a661a5f246",
+    "cache": {
+      "enabled": false
+    }
   }
 }
