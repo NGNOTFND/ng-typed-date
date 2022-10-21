@@ -18,16 +18,15 @@ import {
 } from '@angular/forms';
 
 @Directive({
-  selector: '[ngModelDate]:not([formControlName]):not([formControl])',
+  selector: '[ngModelDatetimeLocal]:not([formControlName]):not([formControl])',
   providers: [
     DatePipe
   ],
   host: {
     '(change)': 'onChangeDate($event.target.value)',
-    '(blur)': 'onBlur()',
   }
 })
-export class NgModelDateDirective extends NgModel implements OnInit, ControlValueAccessor {
+export class NgModelDatetimeLocalDirective extends NgModel implements OnInit, ControlValueAccessor {
 
   private _ngModelDate: Date | null;
   private _min: Date | string;
@@ -40,22 +39,22 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
     if (this.isValidDate(value)) {
       if (this._ngModelDate != value) {
         this._ngModelDate = value;
-        this.onBlur();
+        this.control.setValue(this.formatDate(this._ngModelDate));
+        this.onTouched();
       }
     } else {
       this._ngModelDate = null;
     }
 
   }
-  @Input() required: boolean | string = null;
 
   public get min(): Date | string {
     return this._min;
   }
   @Input() public set min(value: Date | string) {
-    if (this._min !== value) {
+    if (this._min != value) {
       this._min = value;
-      this.setSettingsInputDate('min', this.min);
+      this.setSettingsInputDate('min', this._min);
     }
   }
 
@@ -63,19 +62,20 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
     return this._max;
   }
   @Input() public set max(value: Date | string) {
-    if(this._max !== value) {
+    if (this._max != value) {
       this._max = value;
-      this.setSettingsInputDate('max', this.max);
+      this.setSettingsInputDate('max', this._max);
     }
   }
+
+  @Input() required: boolean | string = null;
 
   @Output() ngModelDateChange = new EventEmitter<Date>();
 
   constructor(
     @Optional() @Host() parent: ControlContainer,
     private elementRef: ElementRef,
-    private renderer: Renderer2,
-    private datePipe: DatePipe) {
+    private renderer: Renderer2) {
     super(parent, null, null, null);
 
     super.valueAccessor = this;
@@ -103,7 +103,6 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
 
     this.setSettingsInputDate('min', this.min);
     this.setSettingsInputDate('max', this.max);
-    this.onBlur();
   }
 
   private setRequired() {
@@ -121,23 +120,31 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
   onChange: any = () => { };
   onTouched: any = () => { };
 
-  onChangeDate(event: string) {
-    const [year, month, day] = event.split('-');
-    this._ngModelDate = new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
+  onChangeDate(value: string) {
+    this._ngModelDate = this.parseDateString(value);
+
     this.ngModelDateChange.emit(this._ngModelDate);
   }
 
-  onBlur(): void {
-    this.control.setValue(this.formatDate(this._ngModelDate));
-    this.onTouched();
+  private parseDateString(date: string): Date {
+    date = date.replace('T', '-');
+    var parts = date.split('-');
+    var timeParts = parts[3].split(':');
+    return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), Number(timeParts[0]), Number(timeParts[1]));
+
   }
 
   private formatDate(date: Date | string) {
 
     if (this.isValidDate(date))
-      return this.datePipe.transform(date, 'yyyy-MM-dd');
+      return this.toDateString(new Date(date));
 
     return null;
+  }
+
+  private toDateString(date: Date): string {
+    return (date.getFullYear().toString() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + (date.getDate())).slice(-2))
+      + 'T' + date.toTimeString().slice(0, 5);
   }
 
   private setPropertyElement(propertyName: string, value: any) {

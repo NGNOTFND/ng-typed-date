@@ -1,7 +1,11 @@
 <form #form="ngForm">
-  <input type="date" [(ngModelDate)]="periodo.dtInicio" [max]="periodo.dtFim" name="data" required />
+  <!-- <input type="date" [(ngModelDate)]="periodo.dtInicio" [max]="periodo.dtFim" name="data" required />
   <br>
   <input type="date" [(ngModelDate)]="periodo.dtFim" [min]="periodo.dtInicio" name="data" required />
+  <br> -->
+  <input type="datetime-local" [(ngModelDatetimeLocal)]="periodo.dtInicio" [max]="periodo.dtFim" name="data" required />
+  <br>
+  <input type="datetime-local" [(ngModelDatetimeLocal)]="periodo.dtFim" [min]="periodo.dtInicio" name="data" required />
   {{ periodo | json }}
   {{ form.invalid }}
 </form>
