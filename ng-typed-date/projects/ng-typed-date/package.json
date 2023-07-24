@@ -1,8 +1,9 @@
 {
   "name": "@ng-not-found/ng-typed-date",
-  "version": "4.0.9",
+  "version": "5.0.9",
   "peerDependencies": {
-  
+    "@angular/common": "~14.3.0",
+    "@angular/core": "~14.3.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
