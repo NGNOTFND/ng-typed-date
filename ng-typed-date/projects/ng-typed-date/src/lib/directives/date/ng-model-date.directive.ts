@@ -52,7 +52,7 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
     return this._min;
   }
   @Input() public set min(value: Date | string) {
-    if(this._min != value) {
+    if (this._min != value) {
       this._min = value;
       this.setSettingsInputDate('min', this._min);
     }
@@ -146,6 +146,9 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
   }
 
   private isValidDate(value: Date | string) {
+    if (!value)
+      return false;
+
     if (value instanceof Date)
       return !isNaN(value.getTime());
 

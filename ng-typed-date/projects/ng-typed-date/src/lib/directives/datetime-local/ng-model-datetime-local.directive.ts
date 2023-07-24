@@ -1,3 +1,4 @@
+
 import {
   Directive,
   ElementRef,
@@ -18,7 +19,8 @@ import {
 
 @Directive({
   selector: '[type=datetime-local][ngModelDate]:not([formControlName]):not([formControl])',
-  providers: [],
+  providers: [
+  ],
   host: {
     '(change)': 'onChangeDate($event.target.value)',
   }
@@ -119,11 +121,14 @@ export class NgModelDatetimeLocalDirective extends NgModel implements OnInit, Co
 
   onChangeDate(value: string) {
     this._ngModelDate = this.parseDateString(value);
-
+    this.control.setValue(this.formatDate(this._ngModelDate));
     this.ngModelDateChange.emit(this._ngModelDate);
   }
 
   private parseDateString(date: string): Date {
+    if (!date)
+      return undefined;
+
     date = date.replace('T', '-');
     var parts = date.split('-');
     var timeParts = parts[3].split(':');
@@ -149,6 +154,9 @@ export class NgModelDatetimeLocalDirective extends NgModel implements OnInit, Co
   }
 
   private isValidDate(value: Date | string) {
+    if (!value)
+      return false;
+
     if (value instanceof Date)
       return !isNaN(value.getTime());
 
