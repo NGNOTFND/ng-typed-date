@@ -146,6 +146,9 @@ export class NgModelDateDirective extends NgModel implements OnInit, ControlValu
   }
 
   private isValidDate(value: Date | string) {
+    if(!value)
+      return false;
+
     if (value instanceof Date)
       return !isNaN(value.getTime());
 
